@@ -16,10 +16,10 @@ function SwaggerConfig(app) {
         },
       ],
     },
-    apis: ["./routes/*.js"],
+    apis: [process.cwd() + "/src/modules/**/*.swagger.js"],
   });
 
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 module.exports = SwaggerConfig;
