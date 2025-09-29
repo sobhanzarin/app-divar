@@ -19,7 +19,7 @@ function SwaggerConfig(app) {
     apis: [process.cwd() + "/src/modules/**/*.swagger.js"],
   });
 
-  app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument, {}));
 }
 
 module.exports = SwaggerConfig;

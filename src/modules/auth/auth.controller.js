@@ -5,22 +5,28 @@ const { authMessage } = require("./auth.messages");
 class AuthController {
   #service;
   constructor() {
-    this.#service = AuthService;
     authoBind(this);
+    this.#service = AuthService;
   }
   async sendOTP(req, res, next) {
     try {
-      const { mobile } = req.bod;
+      const { mobile } = req.body;
       await this.#service.sendOTP(mobile);
-      return {
+      return res.json({
         message: authMessage.SendOtpSuccessfullt,
-      };
+      });
     } catch (error) {
       next(error);
     }
   }
   async checkOTP(req, res, next) {
     try {
+      const { mobile, code } = req.body;
+      const token = await this.#service.checkOTP(mobile, code);
+      return res.json({
+        message: authMessage.loginSuccessfully,
+        token,
+      });
     } catch (error) {
       next(error);
     }
