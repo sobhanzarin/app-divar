@@ -47,7 +47,7 @@
  *                      $ref: '#/components/schemas/SendOTP'
  *      responses:
  *          200:
- *              description: success
+ *              description: Successfully
  */
 
 /**
@@ -69,7 +69,7 @@
  *                      $ref: '#/components/schemas/CheckOTP'
  *      responses:
  *          200:
- *              description: success
+ *              description: Successfully
  */
 /**
  * @swagger
@@ -81,5 +81,5 @@
  *          -   Auth
  *      responses:
  *          200:
- *              description: success
+ *              description: Successfully
  */

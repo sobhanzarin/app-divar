@@ -1,4 +1,3 @@
-const UserModel = require("../user/user.model");
 const AuthService = require("./auth.service");
 const authoBind = require("auto-bind");
 const { authMessage } = require("./auth.messages");
