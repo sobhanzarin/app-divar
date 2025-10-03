@@ -1,5 +1,5 @@
 const autoBind = require("auto-bind");
-const CategoryController = require("./category.service");
+const ServiceController = require("./category.service");
 const httpCodes = require("http-codes");
 const categoryMessage = require("./category.message");
 
@@ -13,8 +13,9 @@ class CategoryController {
     try {
       const { name, slug, icon, parent } = req.body;
       await this.#service.create({ name, slug, icon, parent });
-      return res.statu(httpCodes.CREATED).json({
+      return res.status(httpCodes.CREATED).json({
         message: categoryMessage.created,
+        data: newCategory,
       });
     } catch (error) {
       next(error);
