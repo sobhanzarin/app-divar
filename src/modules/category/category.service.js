@@ -12,7 +12,8 @@ class CategoryService {
     this.#model = CategoryModel;
   }
   async find() {
-    return this.#model.find({ parent: { exists: false } }).populate("children");
+    // return this.#model.find();
+    return this.#model.find({}, { parent: { exists: false } });
   }
   async create(categoryData) {
     if (categoryData?.parent && isValidObjectId(categoryData.parent)) {
@@ -28,10 +29,10 @@ class CategoryService {
     }
 
     if (categoryData?.slug) {
-      categoryData.slug = slugify(categoryData.slug);
+      categoryData.slug = slugify(categoryData.slug, { trim: true });
       await this.alreadyExistBySlug(categoryData.slug);
     } else {
-      categoryData.slug = slugify(categoryData.name);
+      categoryData.slug = slugify(categoryData.name, { trim: true });
     }
 
     const newCategory = await this.#model.create(categoryData);

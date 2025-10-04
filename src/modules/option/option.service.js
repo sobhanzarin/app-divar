@@ -21,9 +21,10 @@ class OptionService {
       replacement: "_",
       lower: true,
     });
+    await this.alreadyExistByCategoryAndKey(optionDto.key, optionDto.category);
     if (optionDto.enum && optionDto.enum == "string") {
       optionDto.enum = optionDto.enum.split(",");
-    } else if (!Array.isArray(optionDto.enum)) optionDto.enum = [];
+    } else if (Array.isArray(optionDto.enum)) optionDto.enum = [];
     const newOption = await this.#model.create(optionDto);
     return newOption;
   }
@@ -34,7 +35,7 @@ class OptionService {
   }
   async alreadyExistByCategoryAndKey(key, category) {
     const isExist = await this.#model.findOne({ key, category });
-    if (isExist) throw new createHttpError.NotFound(optionMessage.NotFound);
+    if (isExist) throw new createHttpError.Conflict(optionMessage.alreadyExist);
     return null;
   }
 

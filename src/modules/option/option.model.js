@@ -12,7 +12,6 @@ const optionsSchema = new mongoose.Schema({
   guid: { type: String, required: false },
   category: { type: mongoose.Types.ObjectId, ref: "Category", required: false },
 });
-coordin;
 const optionModel = mongoose.model("Option", optionsSchema);
 
 module.exports = optionModel;

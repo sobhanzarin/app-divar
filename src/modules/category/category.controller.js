@@ -23,7 +23,7 @@ class CategoryController {
   }
   async find(req, res, next) {
     try {
-      const categorys = await this.#service.find();
+      const categorys = await this.#service.find({});
       return res.json(categorys);
     } catch (error) {
       next(error);

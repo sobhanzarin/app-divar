@@ -30,7 +30,6 @@
  *                      enum:
  *                          -   number
  *                          -   string
- *                          -   string
  *                          -   boolean
  *                          -   array
  *                    enum:

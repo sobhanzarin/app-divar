@@ -2,7 +2,7 @@
  * @swagger
  *  tags:
  *   name: Category
- *   description: categorys
+ *   description: category modul
  */
 
 /**
