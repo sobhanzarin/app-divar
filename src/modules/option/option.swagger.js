@@ -9,39 +9,53 @@
  * @swagger
  *  components:
  *      schemas:
- *          createCategory:
+ *          createOption:
  *                type: object
  *                required:
- *                    -   name
- *                    -   icon
+ *                    -   title
+ *                    -   type
+ *                    -   key
+ *                    -   category
  *                properties:
- *                    name:
+ *                    title:
  *                      type: string
- *                    slug:
+ *                    key:
  *                      type: string
- *                    icon:
+ *                    category:
  *                      type: string
- *                    parent:
+ *                    guid:
  *                      type: string
+ *                    type:
+ *                      type: string
+ *                      enum:
+ *                          -   number
+ *                          -   string
+ *                          -   string
+ *                          -   boolean
+ *                          -   array
+ *                    enum:
+ *                      type: array
+ *                      items:
+ *                          type: string
  */
 
 /**
  * @swagger
  *
- * /category:
+ * /option:
  *  post:
- *      summary: create category
+ *      summary: create option for category
  *      tags:
- *          -   Category
+ *          -   Option
  *      requestBody:
  *          required: true
  *          content:
  *              application/x-www-form-urlencoded:
  *                  schema:
- *                      $ref: '#/components/schemas/createCategory'
+ *                      $ref: '#/components/schemas/createOption'
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/createCategory'
+ *                      $ref: '#/components/schemas/createOption'
  *      responses:
  *          201:
  *              description: Successfull
@@ -50,11 +64,44 @@
 /**
  * @swagger
  *
- * /category:
+ * /option/by-category/{categoryId}:
  *  get:
- *      summary: get all Category
+ *      summary: get option by category by id
  *      tags:
- *         -    Category
+ *         -    Option
+ *      parameters:
+ *         -    in: path
+ *              name: categoryId
+ *              type: string
+ *      responses:
+ *         200:
+ *            description: Successfully
+ */
+/**
+ * @swagger
+ *
+ * /option/{id}:
+ *  get:
+ *      summary: get option by id
+ *      tags:
+ *         -    Option
+ *      parameters:
+ *         -    in: path
+ *              name: id
+ *              type: string
+ *      responses:
+ *         200:
+ *            description: Successfully
+ */
+
+/**
+ * @swagger
+ *
+ * /option:
+ *  get:
+ *      summary: get all option of category
+ *      tags:
+ *         -    Option
  *      responses:
  *         200:
  *            description: Successfully

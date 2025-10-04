@@ -1,5 +1,5 @@
 const autoBind = require("auto-bind");
-const ServiceController = require("./category.service");
+const CategoryService = require("./category.service");
 const httpCodes = require("http-codes");
 const categoryMessage = require("./category.message");
 
@@ -7,7 +7,7 @@ class CategoryController {
   #service;
   constructor() {
     autoBind(this);
-    this.#service = ServiceController;
+    this.#service = CategoryService;
   }
   async create(req, res, next) {
     try {

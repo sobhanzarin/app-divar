@@ -5,7 +5,7 @@ const categoryMessage = require("./category.message");
 const { isValidObjectId, Types } = require("mongoose");
 const { default: slugify } = require("slugify");
 
-class ServiceController {
+class CategoryService {
   #model;
   constructor() {
     autoBind(this);
@@ -58,4 +58,4 @@ class ServiceController {
   }
 }
 
-module.exports = new ServiceController();
+module.exports = new CategoryService();
