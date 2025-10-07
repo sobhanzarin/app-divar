@@ -32,20 +32,27 @@ class optionController {
   }
   async find(req, res, next) {
     try {
-      const options = await this.#service.find({}, { _v: 0 });
-      return options;
+      const options = await this.#service.find();
+      return res.json(options);
     } catch (error) {
       next(error);
     }
   }
   async findById(req, res, next) {
     try {
+      const { id } = req.params;
+      const optionId = await this.#service.findById(id);
+      return res.send(optionId);
     } catch (error) {
       next(error);
     }
   }
   async findByCategoryId(req, res, next) {
     try {
+      const { categoryId } = req.params;
+      const optionCategoryId = await this.#service.findByCategoryId(categoryId);
+      console.log(optionCategoryId);
+      return res.send(optionCategoryId);
     } catch (error) {
       next(error);
     }

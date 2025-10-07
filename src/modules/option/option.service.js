@@ -13,6 +13,23 @@ class OptionService {
     this.#model = optionModel;
     this.#categoryModel = categoryModel;
   }
+  async find() {
+    const options = this.#model
+      .find({}, { __v: 0 }, { _id: -1 })
+      .populate([{ path: "category", select: { name: 1, slug: 1 } }]);
+    return options;
+  }
+  async findById(id) {
+    const optionId = await this.#model
+      .findById(id, { __v: 0 })
+      .populate([{ path: "category", select: { name: 1, slug: 1 } }]);
+    return optionId;
+  }
+  async findByCategoryId(category) {
+    return await this.#model
+      .find({ category }, { __v: 0 })
+      .populate([{ path: "category", select: { name: 1, slug: 1 } }]);
+  }
   async create(optionDto) {
     const category = await this.checkExistById(optionDto.category);
     optionDto.category = category._id;
@@ -38,10 +55,6 @@ class OptionService {
     if (isExist) throw new createHttpError.Conflict(optionMessage.alreadyExist);
     return null;
   }
-
-  async checkExistBySlug() {}
-
-  async alreadyExistBySlug() {}
 }
 
 module.exports = new OptionService();
