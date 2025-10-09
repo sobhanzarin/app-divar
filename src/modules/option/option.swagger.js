@@ -25,6 +25,8 @@
  *                      type: string
  *                    guid:
  *                      type: string
+ *                    required:
+ *                      type: boolean
  *                    type:
  *                      type: string
  *                      enum:
@@ -77,11 +79,47 @@
  *            description: Successfully
  */
 /**
+
+**
+ * @swagger
+ *
+ * /option/by-category-slug/{slug}:
+ *  get:
+ *      summary: get option by category by id
+ *      tags:
+ *         -    Option
+ *      parameters:
+ *         -    in: path
+ *              name: categorySlug
+ *              type: string
+ *      responses:
+ *         200:
+ *            description: Successfully
+ */
+/**
+
  * @swagger
  *
  * /option/{id}:
  *  get:
  *      summary: get option by id
+ *      tags:
+ *         -    Option
+ *      parameters:
+ *         -    in: path
+ *              name: id
+ *              type: string
+ *      responses:
+ *         200:
+ *            description: Successfully
+ */
+
+/**
+ * @swagger
+ *
+ * /option/{id}:
+ *  delete:
+ *      summary: delete option by id
  *      tags:
  *         -    Option
  *      parameters:

@@ -11,6 +11,7 @@ const optionsSchema = new mongoose.Schema({
   enum: { type: Array, default: [] },
   guid: { type: String, required: false },
   category: { type: mongoose.Types.ObjectId, ref: "Category", required: false },
+  required: { type: Boolean, required: true, default: false },
 });
 const optionModel = mongoose.model("Option", optionsSchema);
 
