@@ -4,16 +4,25 @@ const createHttpError = require("http-errors");
 const categoryMessage = require("./category.message");
 const { isValidObjectId, Types } = require("mongoose");
 const { default: slugify } = require("slugify");
+const optionModel = require("../option/option.model");
 
 class CategoryService {
   #model;
+  #optionModel;
   constructor() {
     autoBind(this);
     this.#model = CategoryModel;
+    this.#optionModel = optionModel;
   }
   async find() {
-    // return this.#model.find();
     return this.#model.find({}, { parent: { exists: false } });
+  }
+  async delete(id) {
+    const category = await this.checkExistId(id);
+    await this.#optionModel.deleteMany({ category: id }).then(async () => {
+      await this.#model.deleteMany({ _id: id });
+    });
+    return true;
   }
   async create(categoryData) {
     if (categoryData?.parent && isValidObjectId(categoryData.parent)) {
