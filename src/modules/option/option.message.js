@@ -3,5 +3,6 @@ const optionMessage = Object.freeze({
   notFound: "Option not found",
   alreadyExist: "Option already exist",
   Deleted: "Option delete successfully",
+  Updated: "Option update successfully",
 });
 module.exports = optionMessage;
