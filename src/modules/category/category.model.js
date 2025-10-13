@@ -1,9 +1,9 @@
-const { default: mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 
 const categorySchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    slug: { type: String, required: true, index: true },
+    title: { type: String, required: true },
+    slug: { type: String, unique: true, required: true, index: true },
     icon: { type: String, required: true },
     parent: { type: mongoose.Types.ObjectId, ref: "Category", required: false },
     parents: {
@@ -23,9 +23,10 @@ categorySchema.virtual("children", {
 });
 
 function autoPopulate(next) {
-  this.populate([{ path: "childrena" }]);
+  this.populate([{ path: "children" }]);
   next();
 }
+categorySchema.pre("find", autoPopulate).pre("findOne", autoPopulate);
 
 const CategoryModel = mongoose.model("Category", categorySchema);
 

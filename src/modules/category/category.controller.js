@@ -11,11 +11,10 @@ class CategoryController {
   }
   async create(req, res, next) {
     try {
-      const { name, slug, icon, parent } = req.body;
-      await this.#service.create({ name, slug, icon, parent });
+      const { title, slug, icon, parent } = req.body;
+      await this.#service.create({ title, slug, icon, parent });
       return res.status(httpCodes.CREATED).json({
         message: categoryMessage.created,
-        data: newCategory,
       });
     } catch (error) {
       next(error);

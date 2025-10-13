@@ -2,7 +2,7 @@
  * @swagger
  *  tags:
  *   name: Category
- *   description: category modul
+ *   description: category modul and Routes
  */
 
 /**
@@ -10,19 +10,19 @@
  *  components:
  *      schemas:
  *          createCategory:
- *                type: object
- *                required:
- *                    -   name
- *                    -   icon
- *                properties:
- *                    name:
- *                      type: string
- *                    slug:
- *                      type: string
- *                    icon:
- *                      type: string
- *                    parent:
- *                      type: string
+ *                  type: object
+ *                  required:
+ *                      -   title
+ *                      -   icon
+ *                  properties:
+ *                      title:
+ *                          type: string
+ *                      slug:
+ *                          type: string
+ *                      icon:
+ *                          type: string
+ *                      parent:
+ *                          type: string
  */
 
 /**

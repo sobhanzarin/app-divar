@@ -1,6 +1,6 @@
-const categoryMessage = Object.freeze({
-  created: "Category Created Successfully",
-  notFound: "Category not found",
-  alreadyExist: "Category already exist",
+const postMessage = Object.freeze({
+  created: "post Created Successfully",
+  notFound: "post not found",
+  alreadyExist: "post already exist",
 });
-module.exports = categoryMessage;
+module.exports = postMessage;

@@ -15,7 +15,7 @@ class CategoryService {
     this.#optionModel = optionModel;
   }
   async find() {
-    return this.#model.find({}, { parent: { exists: false } });
+    return this.#model.find({}, { parent: { $exists: false } });
   }
   async delete(id) {
     const category = await this.checkExistId(id);
@@ -36,15 +36,16 @@ class CategoryService {
         ),
       ];
     }
-
+    console.log(categoryData);
     if (categoryData?.slug) {
       categoryData.slug = slugify(categoryData.slug, { trim: true });
       await this.alreadyExistBySlug(categoryData.slug);
     } else {
-      categoryData.slug = slugify(categoryData.name, { trim: true });
+      categoryData.slug = slugify(categoryData.title, { trim: true });
     }
 
     const newCategory = await this.#model.create(categoryData);
+    console.log(newCategory);
     return newCategory;
   }
 

@@ -1,34 +1,32 @@
 const autoBind = require("auto-bind");
-const ServiceController = require("./category.service");
-const httpCodes = require("http-codes");
-const categoryMessage = require("./category.message");
+const postService = require("./post.service");
 
-class CategoryController {
+class PostController {
   #service;
   constructor() {
     autoBind(this);
-    this.#service = ServiceController;
+    this.#service = postService;
+  }
+  async createPostPage(req, res, next) {
+    try {
+      res.render("./pages/panel/create-post.ejs");
+      // res.json("hello");
+    } catch (error) {
+      next(error);
+    }
   }
   async create(req, res, next) {
     try {
-      const { name, slug, icon, parent } = req.body;
-      await this.#service.create({ name, slug, icon, parent });
-      return res.status(httpCodes.CREATED).json({
-        message: categoryMessage.created,
-        data: newCategory,
-      });
     } catch (error) {
       next(error);
     }
   }
   async find(req, res, next) {
     try {
-      const categorys = await this.#service.find();
-      return res.json(categorys);
     } catch (error) {
       next(error);
     }
   }
 }
 
-module.exports = new CategoryController();
+module.exports = new PostController();
