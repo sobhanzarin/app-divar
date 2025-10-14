@@ -15,7 +15,7 @@ class CategoryService {
     this.#optionModel = optionModel;
   }
   async find() {
-    return this.#model.find({}, { parent: { $exists: false } });
+    return this.#model.find({}, { parent: { exists: false } });
   }
   async delete(id) {
     const category = await this.checkExistId(id);

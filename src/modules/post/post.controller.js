@@ -1,5 +1,7 @@
 const autoBind = require("auto-bind");
 const postService = require("./post.service");
+const CategoryModel = require("../category/category.model");
+const createHttpError = require("http-errors");
 
 class PostController {
   #service;
@@ -9,8 +11,27 @@ class PostController {
   }
   async createPostPage(req, res, next) {
     try {
-      res.render("./pages/panel/create-post.ejs");
-      // res.json("hello");
+      let { slug } = req.query;
+      let showBack = false;
+      let match = { parent: null };
+      if (slug) {
+        slug = slug.trim();
+        const category = await CategoryModel.findOne({ slug });
+        if (!category) throw new createHttpError.NotFound(postMessage.NotFound);
+        showBack = true;
+        match = {
+          parent: category._id,
+        };
+      }
+      const categories = await CategoryModel.aggregate([
+        {
+          $match: match,
+        },
+      ]);
+      res.render("./pages/panel/create-post.ejs", {
+        categories,
+        showBack,
+      });
     } catch (error) {
       next(error);
     }

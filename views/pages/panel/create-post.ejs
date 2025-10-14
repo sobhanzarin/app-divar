@@ -1,25 +1,30 @@
 <div class="col-lg-12 d-flex align-items-stretch">
   <div class="card w-100">
+    <%if(showBack){%>
     <div class="p-3">
       <a href="/post/create" class="btn btn-danger">بازگشت به همه ی دسته ها</a>
     </div>
+    <%}%>
     <div class="p-3">
+      <%if(categories && categories.length > 0) {%>
       <ul>
-        <li>
-          <a href="?slug=" class="w-100 p-3 d-block bg-light text-dark">
+        <%categories.forEach(category => {%>
+        <li class="rounded m-3">
+          <a
+            href="?slug=<%=category.slug%>"
+            class="w-100 p-3 d-block bg-light text-dark"
+          >
             <span class="ti nav-small-cap-icon fs-4"></span>
-            <span>test</span>
+            <span><%=category.title%></span>
           </a>
         </li>
+        <%})%>
       </ul>
+      <%}%>
       <form action="/post/create" method="post" enctype="multipart/form-data">
         <input type="hidden" name="lat" id="lat" />
         <input type="hidden" name="lng" id="lng" />
         <input type="hidden" name="category" id="category" value="" />
-        <div class="p-2">
-          <label>آدرس ایمیل</label>
-          <div id="map-element" class="w-100" style="height: 300px"></div>
-        </div>
         <div class="p-2">
           <label>تصاویر آگهی</label>
           <input type="file" name="images" multiple class="form-control" />
