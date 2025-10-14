@@ -16,13 +16,14 @@
  *                      -   icon
  *                  properties:
  *                      title:
- *                          type: string
+ *                         type: string
  *                      slug:
- *                          type: string
+ *                         type: string
  *                      icon:
- *                          type: string
+ *                         type: string
  *                      parent:
- *                          type: string
+ *                         type: string
+ *
  */
 
 /**
