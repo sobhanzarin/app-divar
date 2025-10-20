@@ -9,7 +9,7 @@ const optionsSchema = new mongoose.Schema(
       required: true,
       enum: ["number", "string", "array", "boolean"],
     },
-    enum: { type: Array, default: [] },
+    enum: { type: [String], default: [] },
     guid: { type: String, required: false },
     category: {
       type: mongoose.Types.ObjectId,
@@ -18,7 +18,7 @@ const optionsSchema = new mongoose.Schema(
     },
     required: { type: Boolean, required: true, default: false },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 const optionModel = mongoose.model("Option", optionsSchema);
 

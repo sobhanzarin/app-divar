@@ -81,9 +81,12 @@ class OptionService {
       lower: true,
     });
     await this.alreadyExistByCategoryAndKey(optionDto.key, optionDto.category);
-    if (optionDto.enum && optionDto.enum == "string") {
+    if (optionDto.enum && typeof optionDto.enum == "string")
       optionDto.enum = optionDto.enum.split(",");
-    } else if (!Array.isArray(optionDto.enum)) optionDto.enum = [];
+    else if (!Array.isArray(optionDto.enum)) optionDto.enum = [];
+    // if (optionDto.enum && optionDto.enum == "string") {
+    // }
+    // else if (Array.isArray(optionDto.type)) optionDto.enum = [];
     if (isTrue(optionDto?.required)) optionDto.required = true;
     if (isFalse(optionDto?.required)) optionDto.required = false;
     const newOption = await this.#model.create(optionDto);

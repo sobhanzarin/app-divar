@@ -4,7 +4,7 @@
     <div class="p-3">
       <a href="/post/create" class="btn btn-danger">بازگشت به همه ی دسته ها</a>
     </div>
-    <%}%>
+    <%}%> <%if(!options){%>
     <div class="p-3">
       <%if(categories && categories.length > 0) {%>
       <ul>
@@ -21,51 +21,22 @@
         <%})%>
       </ul>
       <%}%>
-      <form action="/post/create" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="lat" id="lat" />
-        <input type="hidden" name="lng" id="lng" />
-        <input type="hidden" name="category" id="category" value="" />
-        <div class="p-2">
-          <label>تصاویر آگهی</label>
-          <input type="file" name="images" multiple class="form-control" />
-        </div>
-        <div class="p-2">
-          <label>عنوان آگهی</label>
-          <input
-            type="text"
-            name="title_post"
-            placeholder="عنوان آگهی"
-            class="form-control"
-          />
-        </div>
-        <div class="p-2">
-          <label>توضیحات آگهی</label>
-          <textarea
-            class="form-control"
-            name="description"
-            placeholder="توضیحات آگهی"
-          ></textarea>
-        </div>
-        <div class="p-2">
-          <label>مبلغ با قیمت آگهی جهت نمایش</label>
-          <input
-            type="text"
-            name="amount"
-            placeholder="مبلغ"
-            class="form-control"
-          />
-        </div>
-        <label></label>
-        <div class="p-2">
-          <select name="" class="form-select">
-            <option value=""></option>
-          </select>
-        </div>
-        <div class="p-2">
-          <input type="text" name="" class="form-control" placeholder="" />
-        </div>
-        <button type="submit" class="btn btn-danger">انتشار آگهی</button>
-      </form>
     </div>
+    <%}else{%> <%if(options){%> <%options.forEach(option => {%>
+    <label><%=option.title%></label>
+    <%if(option.type == "array"){%>
+    <select name="<%=option.key%>" class="form-control">
+      <%option.enum.forEach(item =>{%>
+      <option value="<%=item%>"><%=item%></option>
+      <%})%>
+    </select>
+    <%}else{%>
+    <input
+      type="text"
+      name="<%=option.key%>"
+      class="form-control"
+      placeholder="<%=option.guid%>"
+    />
+    <%}%> <%})%> <%}%> <%}%>
   </div>
 </div>

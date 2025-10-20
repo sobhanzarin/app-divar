@@ -2,6 +2,7 @@ const autoBind = require("auto-bind");
 const postService = require("./post.service");
 const CategoryModel = require("../category/category.model");
 const createHttpError = require("http-errors");
+const postMessage = require("./post.message");
 
 class PostController {
   #service;
@@ -13,11 +14,16 @@ class PostController {
     try {
       let { slug } = req.query;
       let showBack = false;
+      let options = null;
       let match = { parent: null };
       if (slug) {
         slug = slug.trim();
         const category = await CategoryModel.findOne({ slug });
         if (!category) throw new createHttpError.NotFound(postMessage.NotFound);
+        console.log(category);
+        options = await this.#service.getCategoryOption(category._id);
+        console.log(options);
+        if (options.length === 0) options = null;
         showBack = true;
         match = {
           parent: category._id,
@@ -31,7 +37,10 @@ class PostController {
       res.render("./pages/panel/create-post.ejs", {
         categories,
         showBack,
+        options,
       });
+      console.log(options);
+      // console.log(categories);
     } catch (error) {
       next(error);
     }
