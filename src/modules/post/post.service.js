@@ -12,7 +12,6 @@ class PostService {
   }
   async getCategoryOption(categoryId) {
     const options = await this.#optionModel.find({ category: categoryId });
-    console.log(options);
     return options;
   }
 }

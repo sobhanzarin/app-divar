@@ -20,7 +20,6 @@ class optionController {
         guid,
         required,
       } = req.body;
-      console.log({ title, category, type, key, enum: list, guid, required });
       const newOption = await this.#service.create({
         title,
         category,
@@ -31,7 +30,6 @@ class optionController {
         required,
       });
 
-      console.log(newOption);
       return res.status(httpCodes.CREATED).json({
         message: optionMessage.created,
       });
@@ -51,15 +49,6 @@ class optionController {
         required,
       } = req.body;
       const { id } = req.body;
-      console.log(id, {
-        title,
-        category,
-        type,
-        key,
-        enum: list,
-        guid,
-        required,
-      });
       await this.#service.update(id, {
         title,
         category,
@@ -108,7 +97,6 @@ class optionController {
     try {
       const { categoryId } = req.params;
       const optionCategoryId = await this.#service.findByCategoryId(categoryId);
-      console.log(optionCategoryId);
       return res.send(optionCategoryId);
     } catch (error) {
       next(error);

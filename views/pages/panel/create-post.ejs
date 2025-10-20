@@ -1,11 +1,11 @@
 <div class="col-lg-12 d-flex align-items-stretch">
-  <div class="card w-100">
+  <div class="card w-100 p-3">
     <%if(showBack){%>
-    <div class="p-3">
+    <div class="p-3 mb-3">
       <a href="/post/create" class="btn btn-danger">بازگشت به همه ی دسته ها</a>
     </div>
     <%}%> <%if(!options){%>
-    <div class="p-3">
+    <div class="p-3 mb-3">
       <%if(categories && categories.length > 0) {%>
       <ul>
         <%categories.forEach(category => {%>
@@ -22,10 +22,42 @@
       </ul>
       <%}%>
     </div>
-    <%}else{%> <%if(options){%> <%options.forEach(option => {%>
+    <%}else{%> <%if(options){%>
+
+    <form action="">
+      <div class="p-2">
+        <label for="app">انتخاب آدرس</label>
+        <div class="w-100" id="app" style="height: 300px"></div>
+      </div>
+      <div class="p-2">
+        <label for="images">تصاویر آگهی</label>
+        <input
+          type="file"
+          name="images"
+          multiple
+          class="form-control"
+          id="images"
+        />
+      </div>
+      <div class="p-2">
+        <label for="images">عنوان آگهی</label>
+        <input
+          type="text"
+          name="title-post"
+          placeholder="عنوان آگهی"
+          class="form-control"
+          id="title-post"
+        />
+      </div>
+      <div class="p-2">
+        <label for="images">توضیحات آگهی</label>
+        <textarea name="" class="form-control"></textarea>
+      </div>
+    </form>
+    <%options.forEach(option => {%>
     <label><%=option.title%></label>
     <%if(option.type == "array"){%>
-    <select name="<%=option.key%>" class="form-control">
+    <select name="<%=option.key%>" class="form-select">
       <%option.enum.forEach(item =>{%>
       <option value="<%=item%>"><%=item%></option>
       <%})%>

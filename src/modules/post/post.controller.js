@@ -20,9 +20,7 @@ class PostController {
         slug = slug.trim();
         const category = await CategoryModel.findOne({ slug });
         if (!category) throw new createHttpError.NotFound(postMessage.NotFound);
-        console.log(category);
         options = await this.#service.getCategoryOption(category._id);
-        console.log(options);
         if (options.length === 0) options = null;
         showBack = true;
         match = {
@@ -39,8 +37,6 @@ class PostController {
         showBack,
         options,
       });
-      console.log(options);
-      // console.log(categories);
     } catch (error) {
       next(error);
     }
