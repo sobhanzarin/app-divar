@@ -14,6 +14,9 @@ class PostService {
     const options = await this.#optionModel.find({ category: categoryId });
     return options;
   }
+  async create(postDto) {
+    return await this.#model.create(postDto);
+  }
 }
 
 module.exports = new PostService();

@@ -1,8 +1,10 @@
 const { Router } = require("express");
-const CategoryController = require("./post.controller");
+const PostController = require("./post.controller");
+const { upload } = require("../../common/utils/multer");
 
 const router = Router();
-router.get("/create", CategoryController.createPostPage);
+router.get("/create", PostController.createPostPage);
+router.post("/create", upload.any(), PostController.create);
 module.exports = {
   postRouter: router,
 };

@@ -24,7 +24,19 @@
     </div>
     <%}else{%> <%if(options){%>
 
-    <form action="">
+    <form
+      action="/post/create"
+      method="post"
+      enctype="multipart/form-data; charset=utf-8"
+    >
+      <input type="hidden" name="lat" id="lat" />
+      <input type="hidden" name="lng" id="lng" />
+      <input
+        type="hidden"
+        name="category"
+        id="category"
+        value="<%=category%>"
+      />
       <div class="p-2">
         <label for="app">انتخاب آدرس</label>
         <div class="w-100" id="app" style="height: 300px"></div>
@@ -40,35 +52,38 @@
         />
       </div>
       <div class="p-2">
-        <label for="images">عنوان آگهی</label>
+        <label for="title-post">عنوان آگهی</label>
         <input
           type="text"
-          name="title-post"
+          name="title_post"
           placeholder="عنوان آگهی"
           class="form-control"
           id="title-post"
         />
       </div>
       <div class="p-2">
-        <label for="images">توضیحات آگهی</label>
-        <textarea name="" class="form-control"></textarea>
+        <label for="content">توضیحات آگهی</label>
+        <textarea name="content" class="form-control"></textarea>
       </div>
+
+      <%options.forEach(option => {%>
+      <label><%=option.title%></label>
+      <%if(option.type == "array"){%>
+      <select name="<%=option.title%>" class="form-select">
+        <%option.enum.forEach(item =>{%>
+        <option value="<%=item%>"><%=item%></option>
+        <%})%>
+      </select>
+      <%}else{%>
+      <input
+        type="text"
+        name="<%=option.title%>"
+        class="form-control"
+        placeholder="<%=option.guid%>"
+      />
+      <%}%> <%})%> <%}%>
+      <input type="submit" class="btn btn-danger mt-3" value="ثبت آگهی" />
     </form>
-    <%options.forEach(option => {%>
-    <label><%=option.title%></label>
-    <%if(option.type == "array"){%>
-    <select name="<%=option.key%>" class="form-select">
-      <%option.enum.forEach(item =>{%>
-      <option value="<%=item%>"><%=item%></option>
-      <%})%>
-    </select>
-    <%}else{%>
-    <input
-      type="text"
-      name="<%=option.key%>"
-      class="form-control"
-      placeholder="<%=option.guid%>"
-    />
-    <%}%> <%})%> <%}%> <%}%>
+    <%}%>
   </div>
 </div>

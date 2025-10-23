@@ -42,7 +42,7 @@
     <script type="text/javascript" src="/dist/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/dist/js/mapp.env.js"></script>
     <script type="text/javascript" src="/dist/js/mapp.min.js"></script>
-    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- <script src="/assets/libs/jquery/dist/jquery.min.js"></script> -->
     <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/sidebarmenu.js"></script>
     <script src="/assets/js/app.min.js"></script>
@@ -51,19 +51,43 @@
     <script src="/assets/js/dashboard.js"></script>
     <script>
       $(document).ready(function () {
-        var app = new Mapp({
+        const app = new Mapp({
           element: "#app",
           presets: {
             latlng: {
-              lat: 32,
-              lng: 52,
+              lat: 35,
+              lng: 51,
             },
-            zoom: 6,
+            zoom: 10,
           },
           apiKey:
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZlZWYzY2E1YzI0ZDcwOTNlM2IzZDViNTc2NTYzZjYwYTQ1N2FiZjIxODdhMDdjODY1NTZkNDBkNTVhMzUwNTZlNGE2NzZhZDNiYTM1NTE1In0.eyJhdWQiOiIzNDk1MiIsImp0aSI6ImZlZWYzY2E1YzI0ZDcwOTNlM2IzZDViNTc2NTYzZjYwYTQ1N2FiZjIxODdhMDdjODY1NTZkNDBkNTVhMzUwNTZlNGE2NzZhZDNiYTM1NTE1IiwiaWF0IjoxNzYwOTg5MTQyLCJuYmYiOjE3NjA5ODkxNDIsImV4cCI6MTc2MzQ5NDc0Miwic3ViIjoiIiwic2NvcGVzIjpbImJhc2ljIl19.gjFVjxSztOXpJtB3M8LH_wBSIGPB7pfkOa9CEJyXHj5McTJz3o8fAg-FHIYTaauXd62g7vH2r7TZW9NLcOu3z3n5NEZw156drFICAu4Bwjo3F_e10Q6NIjuggvL7bSuRO4y2TYfMa438DCxSg8MU_oXT5iGEeUKOtPpdH9kTfn7F0t8elZjfk7hUOMgK8Fm7XqKpFxGaYqb0_KV6jYLBopJqde7Rtn4rGY4sTK6etWwD7q8J7L_tWAzrTWOTCZSN-pxMFpxpUejOgvGRvwhZYeUgMW5xNyl6w9A5ou_nwArYsAts3zQ8c2z1oo1P2uy6rSCuiYfx87Yq1SrxZK6Qeg",
+          gestureHandling: true,
+          gestureHandlingOptions: {
+            duration: 1200,
+            text: {
+              touch: "نقشه را با دو انگشت حرکت دهید",
+              scroll: "برای بزرگنمایی نقشه از ctrl + scroll  استفاده کنید",
+              scrollMac:
+                "برای بزرگنمایی نقشه از \u2318  + scroll  استفاده کنید",
+            },
+          },
         });
         app.addLayers();
+        app.map.on("click", function (e) {
+          app.addMarker({
+            name: "advanced-marker",
+            latlng: {
+              lat: e.latlng.lat,
+              lng: e.latlng.lng,
+            },
+            icon: app.icons.red,
+            popup: false,
+          });
+          let { lat, lng } = e.latlng;
+          document.getElementById("lat").value = lat;
+          document.getElementById("lng").value = lng;
+        });
       });
     </script>
   </body>

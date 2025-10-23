@@ -9,11 +9,12 @@ const postSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    province: { type: String, required: true },
-    city: { type: String, required: true },
-    neighborhood: { type: String, required: true },
+    province: { type: String, required: false },
+    city: { type: String, required: false },
+    neighborhood: { type: String, required: false },
     coordinate: { type: [Number], required: true },
     images: { type: [String], required: true },
+    option: { type: Object, default: {} },
   },
   {}
 );
