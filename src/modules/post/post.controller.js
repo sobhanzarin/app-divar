@@ -5,7 +5,8 @@ const createHttpError = require("http-errors");
 const postMessage = require("./post.message");
 const httpCodes = require("http-codes");
 const { Types } = require("mongoose");
-const { default: axios } = require("axios");
+const { getAddressDetails } = require("../../common/utils/api-service");
+const { removePropertyInObject } = require("../../common/utils/functions");
 
 class PostController {
   #service;
@@ -47,42 +48,34 @@ class PostController {
   }
   async create(req, res, next) {
     try {
-      const {
-        title_post: title,
-        content,
-        images,
+      const { title_post: title, content, lat, lng, category } = req.body;
+      console.log(req.file);
+      const images = req?.file?.map((image) => image?.path?.slice(7));
+      console.log(images);
+      const { address, city, province, neighborhood } = await getAddressDetails(
         lat,
-        lng,
-        category,
-      } = req.body;
-      const resultMap = await axios
-        .get(`${process.env.MAP_IR_URL_API}?lat=${lat}&lon=${lng}`, {
-          headers: {
-            "x-api-key": process.env.MAP_API_KEY,
-          },
-        })
-        .then((res) => res.data);
-      console.log(resultMap);
-      delete req.body["title_post"];
-      delete req.body["description"];
-      delete req.body["images"];
-      delete req.body["lat"];
-      delete req.body["lng"];
-      delete req.body["category"];
-      const option = req.body;
+        lng
+      );
+      const option = removePropertyInObject(req.body, [
+        "title_post",
+        "content",
+        "images",
+        "lat",
+        "lng",
+        "category",
+      ]);
       const newPost = await this.#service.create({
         title,
         content,
-        images: [],
+        images,
         coordinate: [lat, lng],
         category: new Types.ObjectId(category),
         option,
-        // address: resultMap.address,
-        province: resultMap.province,
-        city: resultMap.city,
-        neighborhood: resultMap.region,
+        address,
+        province,
+        city,
+        neighborhood,
       });
-      console.log(newPost);
       return res.status(httpCodes.CREATED).json({
         message: postMessage.created,
       });
