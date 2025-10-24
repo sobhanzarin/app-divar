@@ -1,4 +1,4 @@
-const { mongoose } = require("mongoose");
+const { mongoose, mongo } = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
@@ -12,11 +12,11 @@ const postSchema = new mongoose.Schema(
     province: { type: String, required: false },
     city: { type: String, required: false },
     neighborhood: { type: String, required: false },
-    coordinate: { type: [Number], required: true },
-    images: { type: [String], required: true },
-    option: { type: Object, default: {} },
+    coordinate: { type: [Number], required: false },
+    images: { type: [String], required: false },
+    options: { type: mongoose.Schema.Types.Mixed, default: {} },
   },
-  {}
+  { timestamps: true }
 );
 const postModel = mongoose.model("Post", postSchema);
 

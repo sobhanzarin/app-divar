@@ -17,6 +17,9 @@ class PostService {
   async create(postDto) {
     return await this.#model.create(postDto);
   }
+  async find(query = null) {
+    return await this.#model.find(query);
+  }
 }
 
 module.exports = new PostService();

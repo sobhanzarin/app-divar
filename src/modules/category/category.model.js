@@ -13,7 +13,8 @@ const categorySchema = new mongoose.Schema(
       default: [],
     },
   },
-  { versionKey: false, id: false, toJSON: { virtuals: true } }
+  { versionKey: false, id: false, toJSON: { virtuals: true } },
+  { timestamps: true }
 );
 
 categorySchema.virtual("children", {

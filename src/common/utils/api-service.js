@@ -9,10 +9,10 @@ const getAddressDetails = async (lat, lng) => {
     })
     .then((res) => res.data);
   return {
-    address: resultMap.address,
-    province: resultMap.province,
-    city: resultMap.city,
-    neighborhood: resultMap.region,
+    // address: resultMap.address,
+    province: resultMap?.province,
+    city: resultMap?.city,
+    neighborhood: resultMap?.neighbourhood,
   };
 };
 module.exports = { getAddressDetails };

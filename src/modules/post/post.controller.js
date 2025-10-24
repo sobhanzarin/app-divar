@@ -7,6 +7,7 @@ const httpCodes = require("http-codes");
 const { Types } = require("mongoose");
 const { getAddressDetails } = require("../../common/utils/api-service");
 const { removePropertyInObject } = require("../../common/utils/functions");
+const utf8 = require("utf8");
 
 class PostController {
   #service;
@@ -48,30 +49,35 @@ class PostController {
   }
   async create(req, res, next) {
     try {
+      const images = req.files?.map((image) => image?.path?.slice(7));
       const { title_post: title, content, lat, lng, category } = req.body;
-      console.log(req.file);
-      const images = req?.file?.map((image) => image?.path?.slice(7));
-      console.log(images);
-      const { address, city, province, neighborhood } = await getAddressDetails(
+      const { city, province, neighborhood } = await getAddressDetails(
         lat,
         lng
       );
-      const option = removePropertyInObject(req.body, [
+      const options = removePropertyInObject(req.body, [
         "title_post",
         "content",
-        "images",
         "lat",
         "lng",
         "category",
       ]);
-      const newPost = await this.#service.create({
+      console.log(options);
+      for (let key in options) {
+        let value = options[key];
+        delete options[key];
+        key = utf8.decode(key);
+        options[key] = value;
+      }
+      console.log(options);
+
+      await this.#service.create({
         title,
         content,
         images,
+        options,
         coordinate: [lat, lng],
         category: new Types.ObjectId(category),
-        option,
-        address,
         province,
         city,
         neighborhood,
@@ -85,6 +91,8 @@ class PostController {
   }
   async find(req, res, next) {
     try {
+      const posts = await this.#service.find();
+      return res.render("./pages/panel/posts.ejs", { posts });
     } catch (error) {
       next(error);
     }
