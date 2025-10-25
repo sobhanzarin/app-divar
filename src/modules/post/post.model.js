@@ -1,8 +1,9 @@
-const { mongoose, mongo } = require("mongoose");
+const { mongoose, mongo, Types } = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
+    userId: { type: Types.ObjectId, required: true },
     content: { type: String, required: true },
     category: {
       type: mongoose.Types.ObjectId,

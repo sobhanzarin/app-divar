@@ -3,7 +3,6 @@ const postService = require("./post.service");
 const CategoryModel = require("../category/category.model");
 const createHttpError = require("http-errors");
 const postMessage = require("./post.message");
-const httpCodes = require("http-codes");
 const { Types } = require("mongoose");
 const { getAddressDetails } = require("../../common/utils/api-service");
 const { removePropertyInObject } = require("../../common/utils/functions");
@@ -11,6 +10,7 @@ const utf8 = require("utf8");
 
 class PostController {
   #service;
+  #success_message;
   constructor() {
     autoBind(this);
     this.#service = postService;
@@ -49,6 +49,7 @@ class PostController {
   }
   async create(req, res, next) {
     try {
+      const userId = req.user._id;
       const images = req.files?.map((image) => image?.path?.slice(7));
       const { title_post: title, content, lat, lng, category } = req.body;
       const { city, province, neighborhood } = await getAddressDetails(
@@ -62,17 +63,16 @@ class PostController {
         "lng",
         "category",
       ]);
-      console.log(options);
       for (let key in options) {
         let value = options[key];
         delete options[key];
         key = utf8.decode(key);
         options[key] = value;
       }
-      console.log(options);
 
       await this.#service.create({
         title,
+        userId,
         content,
         images,
         options,
@@ -82,17 +82,32 @@ class PostController {
         city,
         neighborhood,
       });
-      return res.status(httpCodes.CREATED).json({
-        message: postMessage.created,
-      });
+      posts = await this.#service.find(userId);
+      this.#success_message = postMessage.created;
+      res.redirect("/post/my-posts");
     } catch (error) {
       next(error);
     }
   }
-  async find(req, res, next) {
+  async findMyPosts(req, res, next) {
     try {
-      const posts = await this.#service.find();
-      return res.render("./pages/panel/posts.ejs", { posts });
+      const userId = req.user._id;
+      const posts = await this.#service.find(userId);
+      res.render("./pages/panel/posts.ejs", {
+        posts,
+        success_message: this.#success_message,
+      });
+      this.#success_message = null;
+    } catch (error) {
+      next(error);
+    }
+  }
+  async delete(req, res, next) {
+    try {
+      const { id } = req.params;
+      this.#success_message = postMessage.delete;
+      await this.#service.delete(id);
+      return res.redirect("/post/my-posts");
     } catch (error) {
       next(error);
     }

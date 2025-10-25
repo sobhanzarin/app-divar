@@ -20,7 +20,7 @@ class optionController {
         guid,
         required,
       } = req.body;
-      const newOption = await this.#service.create({
+      await this.#service.create({
         title,
         category,
         type,

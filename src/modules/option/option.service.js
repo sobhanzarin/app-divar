@@ -19,7 +19,7 @@ class OptionService {
   async find() {
     const options = this.#model
       .find({}, { __v: 0 }, { _id: -1 })
-      .populate([{ path: "category", select: { name: 1, slug: 1 } }]);
+      .populate([{ path: "category", select: { title: 1, slug: 1 } }]);
     return options;
   }
   async findById(id) {
