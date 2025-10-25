@@ -59,12 +59,18 @@
                 </td>
                 <td class="border-bottom-0">
                   <h6 class="fw-semibold mb-0">
-                    <a
-                      href="/post/delete/<%=post._id%>"
-                      onclick="alert('از حذف آگهی مطمئن هستید؟')"
-                      class="btn btn-danger"
-                      >حذف</a
+                    <form
+                      class="d-inline"
+                      action="/post/delete/<%=post._id%>?_method=delete"
+                      method="post"
                     >
+                      <button
+                        class="btn btn-danger"
+                        onclick="alert('از حذف آگهی مطمئن هستید؟')"
+                      >
+                        حذف
+                      </button>
+                    </form>
                     <a href="/" class="btn btn-success">مشاهده</a>
                   </h6>
                 </td>

@@ -6,6 +6,7 @@ const NotFoundHandler = require("./src/common/exception/not-found.handler");
 const AllErrorHandler = require("./src/common/exception/all-exception");
 const cookieParser = require("cookie-parser");
 const expressEjsLayouts = require("express-ejs-layouts");
+const methodOverride = require("method-override");
 const moment = require("jalali-moment");
 dotenv.config();
 
@@ -18,6 +19,7 @@ async function main() {
   app.use(cookieParser(process.env.COOKIE_SECRET_KEY));
   app.use(express.static("public"));
   app.use(expressEjsLayouts);
+  app.use(methodOverride("_method"));
   app.set("veiw engine", "ejs");
   app.set("layout", "./layouts/panel/main.ejs");
   app.use(mainRouter);
