@@ -5,7 +5,7 @@ const Authorization = require("../../common/guard/authorization.guard");
 
 const router = Router();
 router.get("/create", Authorization, PostController.createPostPage);
-router.get("/delete/:id", Authorization, PostController.delete);
+router.delete("/delete/:id", Authorization, PostController.delete);
 router.get("/my-posts", Authorization, PostController.findMyPosts);
 router.post(
   "/create",
@@ -13,6 +13,7 @@ router.post(
   upload.array("images", 10),
   PostController.create
 );
+router.get("/:id", PostController.showPost);
 module.exports = {
   postRouter: router,
 };

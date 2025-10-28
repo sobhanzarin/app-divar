@@ -37,7 +37,8 @@ class PostController {
           $match: match,
         },
       ]);
-      res.render("./pages/panel/create-post.ejs", {
+
+      return res.render("./pages/panel/create-post.ejs", {
         categories,
         showBack,
         category: category?._id,
@@ -82,7 +83,7 @@ class PostController {
         city,
         neighborhood,
       });
-      posts = await this.#service.find(userId);
+      await this.#service.find(userId);
       this.#success_message = postMessage.created;
       res.redirect("/post/my-posts");
     } catch (error) {
@@ -107,7 +108,17 @@ class PostController {
       const { id } = req.params;
       this.#success_message = postMessage.delete;
       await this.#service.delete(id);
-      return res.redirect("/post/my-posts");
+      res.redirect("/post/my-posts");
+    } catch (error) {
+      next(error);
+    }
+  }
+  async showPost(req, res, next) {
+    try {
+      const { id } = req.params;
+      const post = await this.#service.checkExistId(id);
+      res.locals.layout = "./layouts/website/main.ejs";
+      res.render("./pages/home/post.ejs", { post });
     } catch (error) {
       next(error);
     }

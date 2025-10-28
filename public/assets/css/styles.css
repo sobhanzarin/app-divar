@@ -16811,6 +16811,9 @@ fieldset:disabled .btn {
   width: 100%;
   z-index: 110;
 }
+.post-note {
+  margin-top: 20px !important;
+}
 @-webkit-keyframes animation-dropdown-menu-move-up-scroll {
   0% {
     top: 71px;
