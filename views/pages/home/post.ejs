@@ -7,7 +7,9 @@
         <div class="post-title-location"><%=post.city || post.province%></div>
       </div>
       <div class="post-action">
-        <button class="post-button-action button">اطلاعات تماس</button>
+        <button class="post-button-action button" id="contact-btn">
+          اطلاعات تماس
+        </button>
         <button class="post-button-chat button">چت</button>
 
         <img class="post-bookmark" src="/img/bookmark.svg" alt="" />
@@ -42,7 +44,7 @@
       </div>
     </div>
     <div class="post-image">
-      <div class="post-thumbnail">
+      <div class="post-thumbnail m-3">
         <img src="/<%=post.images%>" alt="" class="post-thumbnail" />
       </div>
       <div class="post-note mt-3">
@@ -77,3 +79,16 @@
   </div>
   <footer></footer>
 </div>
+<script>
+  const callDetailBtn = document.getElementById("contact-btn");
+  callDetailBtn.addEventListener("click", () => {
+    Swal.fire({
+      title: "<%=post.userMobile%>",
+      confirmButtonText: "تماس",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "tel://<%=post.userMobile%>";
+      }
+    });
+  });
+</script>

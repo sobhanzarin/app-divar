@@ -20,6 +20,8 @@ async function main() {
   app.use(express.static("public"));
   app.use(expressEjsLayouts);
   app.use(methodOverride("_method"));
+  app.set("layout extractScripts", true);
+  app.set("layout extractStyles", true);
   app.set("veiw engine", "ejs");
   app.set("layout", "./layouts/panel/main.ejs");
   app.use(mainRouter);

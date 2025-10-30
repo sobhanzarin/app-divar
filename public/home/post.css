@@ -142,6 +142,7 @@ hr {
 .post-thumbnail {
   display: flex;
   justify-content: center;
+  margin-bottom: 15px;
 }
 .post-thumbnail img {
   max-width: 490px;
@@ -156,7 +157,7 @@ hr {
 
 .post-note-input textarea {
   background: none;
-  border: 1px solid rgb(0, 0, 0. 0.2);
+  border: 1px solid rgb(0, 0, 0 0.2);
   border-radius: 5px;
   color: rgba(0, 0, 0, 0.2);
   display: block;
@@ -171,8 +172,8 @@ hr {
 }
 
 .post-note p {
-  color: rgba(0,0,0,.56);
-  font-size: .75rem;
+  color: rgba(0, 0, 0, 0.56);
+  font-size: 0.75rem;
   margin-top: 4px;
 }
 
@@ -182,8 +183,8 @@ hr {
   align-items: center;
 }
 .post-privacy p {
-  color: rgba(0,0,0,.56);
-    font-size: .875rem;
+  color: rgba(0, 0, 0, 0.56);
+  font-size: 0.875rem;
 }
 .post-privacy img {
   margin-left: 10px;

@@ -1,10 +1,11 @@
 <div class="main-gird-posts">
+  <%for(let post of posts){%>
   <div class="main-post">
-    <a href="./post.html" class="post-link">
+    <a href="/post/<%=post._id%>" class="post-link">
       <article>
         <div class="main-post-detail">
-          <h2 class="main-post-title">آیفون ۱۴ پرومکس</h2>
-          <div class="main-post-price">۱۰۰,۰۰۰,۰۰۰ تومان</div>
+          <h2 class="main-post-title"><%=post.title%></h2>
+          <div class="main-post-price"><%=post.amount%>تومان</div>
           <div class="main-post-time">لحظاتی پیش در ایران</div>
         </div>
         <div class="main-post-thumbnail">
@@ -13,4 +14,5 @@
       </article>
     </a>
   </div>
+  <%}%>
 </div>
