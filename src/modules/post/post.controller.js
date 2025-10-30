@@ -123,6 +123,17 @@ class PostController {
       next(error);
     }
   }
+  async findAll(req, res, next) {
+    try {
+      const query = req.query;
+      console.log(query);
+      const posts = await this.#service.postAll(query);
+      res.locals.layout = "./layouts/website/main.ejs";
+      res.render("./pages/home/index.ejs", { posts });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new PostController();

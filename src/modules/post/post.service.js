@@ -4,14 +4,17 @@ const optionModel = require("../option/option.model");
 const { isValidObjectId, Types } = require("mongoose");
 const createHttpError = require("http-errors");
 const postMessage = require("./post.message");
+const CategoryModel = require("../category/category.model");
 
 class PostService {
   #model;
   #optionModel;
+  #categoryModel;
   constructor() {
     autoBind(this);
     this.#model = PostModel;
     this.#optionModel = optionModel;
+    this.#categoryModel = CategoryModel;
   }
   async getCategoryOption(categoryId) {
     const options = await this.#optionModel.find({ category: categoryId });
@@ -60,6 +63,31 @@ class PostService {
   async delete(postId) {
     await this.checkExistId(postId);
     return await this.#model.deleteOne({ _id: postId });
+  }
+  async postAll(options) {
+    try {
+      console.log(options);
+      let { category, search } = options;
+      let query = {};
+      if (category) {
+        const result = await this.#model.findOne({ slug: category });
+        console.log(result);
+        if (result) {
+          query["category"] = result._id;
+        } else {
+          return [];
+        }
+        console.log(result);
+      }
+      if (search) {
+        search = new RegExp(search, "ig");
+        query["$or"] = [{ title: search }, { description: search }];
+      }
+      const posts = await this.#model.find(query, {}, { sort: { _id: -1 } });
+      return posts;
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
