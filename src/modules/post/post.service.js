@@ -66,18 +66,21 @@ class PostService {
   }
   async postAll(options) {
     try {
-      console.log(options);
       let { category, search } = options;
       let query = {};
       if (category) {
-        const result = await this.#model.findOne({ slug: category });
-        console.log(result);
+        const result = await this.#categoryModel.findOne({ slug: category });
+        let categories = await this.#categoryModel.find(
+          { parents: result._id },
+          { _id: 1 }
+        );
+        categories = categories.map((item) => item._id);
+        console.log(categories);
         if (result) {
-          query["category"] = result._id;
+          query["category"] = { $in: [result._id, ...categories] };
         } else {
           return [];
         }
-        console.log(result);
       }
       if (search) {
         search = new RegExp(search, "ig");
